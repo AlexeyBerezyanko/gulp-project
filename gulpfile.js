@@ -49,6 +49,13 @@ function js() {
         .pipe(browserSync.stream())
 }
 
+// функция копирования шрифтов
+function fonts() {
+    return gulp.src('src/assets/fonts/*')
+        .pipe(gulp.dest('build/assets/fonts'))
+        .pipe(browserSync.stream())
+}
+
 // функция копирования изображений
 function images() {
     return gulp.src('src/assets/imgs/**/*')
@@ -87,13 +94,14 @@ function watcher() {
     gulp.watch('src/assets/scss/**/*.scss', css)
     gulp.watch('src/assets/js/*.js', js)
     gulp.watch('src/assets/imgs/**/*', images)
+    gulp.watch('src/assets/fonts/*', fonts)
 }
 
 //команда запуска по умолчанию (gulp)
 gulp.task(
     'default',
     gulp.series(
-        gulp.parallel(html, css, js, images, vendorJS, vendorCSS),
+        gulp.parallel(html, css, js, images, vendorJS, vendorCSS, fonts),
         gulp.parallel(watcher, browsersync)
     )
 );
